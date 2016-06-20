@@ -8,4 +8,35 @@
 
 <hr />
 
+<h3>Comments</h3>
+
+<% post.comments.forEach(function(comment) { %>
+  <h4><%= comment.content %></h4>
+  <p>from: <%= comment.firstName %> <%= comment.lastName %>
+  <br>posted: <%= comment.createdAt %></p>
+  <hr />
+<% }); %>
+<hr />
+
+<a id="leaveComment">Add Comment</a>
+
+<form action="/posts/<%= post.id %>/comment" method="POST" style="display: none;">
+  <h4>Leave a comment...</h4>
+  <div>
+    <label for="userComment">Content</label>
+    <br>
+    <textarea type="text" name="userComment" placeholder="Comment body..." required></textarea>
+  </div>
+  <div>
+    <label for="userCommentFName">First Name</label>
+    <input type="text" name="userCommentFName" placeholder="Your first name.." required>
+  </div>
+  <div>
+    <label for="userCommentLName">Last Name</label>
+    <input type="text" name="userCommentLName" placeholder="Your last name.." required>
+  </div>
+  <input type="submit" class="btn btn-primary">
+</form>
+<hr />
+
 <a href="/">&larr; Back Home</a>

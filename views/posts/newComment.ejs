@@ -1,0 +1,7 @@
+<h3>Leave a comment on <%= .title %></h3>
+
+<form hidden action="/posts/:id/comment" method="POST">
+  <input type="text" name="user-comment" required placeholder="Comment body...">
+  <input type="text" name="user-comment-fName" required placeholder="Your first name..">
+  <input type="text" name="user-comment-lName" required placeholder="Your last name..">
+</form>

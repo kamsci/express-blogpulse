@@ -13,7 +13,7 @@ router.post('/', function(req, res) {
     res.redirect('/');
   })
   .catch(function(error) {
-    res.status(400).render('main/404');
+    // res.status(400).render('main/404');
   });
 });
 
@@ -24,7 +24,7 @@ router.get('/new', function(req, res) {
     res.render('posts/new', { authors: authors });
   })
   .catch(function(error) {
-    res.status(400).render('main/404');
+    // res.status(400).render('main/404');
   });
 });
 
@@ -32,14 +32,31 @@ router.get('/new', function(req, res) {
 router.get('/:id', function(req, res) {
   db.post.find({
     where: { id: req.params.id },
-    include: [db.author]
+    include: [db.author, db.comment]
   })
   .then(function(post) {
     if (!post) throw Error();
+    // res.send(post);
     res.render('posts/show', { post: post });
   })
   .catch(function(error) {
-    res.status(400).render('main/404');
+    res.status(404).render('main/404');
+  });
+});
+
+// GET /posts/comment - display form for creating a new comment
+router.post('/:id/comment', function(req, res) {
+  // res.send(req.body);
+// write new comment to DB
+  db.comment.create( {
+    content: req.body.userComment,
+    firstName: req.body.userCommentFName,
+    lastName: req.body.userCommentLName,
+    postId: req.params.id
+  }).then (function(comment) {
+    res.redirect("/posts/" + req.params.id);
+  }). catch(function(error) {
+    res.status(404).render('main/404');
   });
 });
 
